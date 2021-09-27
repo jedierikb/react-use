@@ -1,5 +1,9 @@
-export var noop = function () { };
-export function on(obj) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.isNavigator = exports.isBrowser = exports.off = exports.on = exports.noop = void 0;
+var noop = function () { };
+exports.noop = noop;
+function on(obj) {
     var args = [];
     for (var _i = 1; _i < arguments.length; _i++) {
         args[_i - 1] = arguments[_i];
@@ -8,7 +12,8 @@ export function on(obj) {
         obj.addEventListener.apply(obj, args);
     }
 }
-export function off(obj) {
+exports.on = on;
+function off(obj) {
     var args = [];
     for (var _i = 1; _i < arguments.length; _i++) {
         args[_i - 1] = arguments[_i];
@@ -17,5 +22,6 @@ export function off(obj) {
         obj.removeEventListener.apply(obj, args);
     }
 }
-export var isBrowser = typeof window !== 'undefined';
-export var isNavigator = typeof navigator !== 'undefined';
+exports.off = off;
+exports.isBrowser = typeof window !== 'undefined';
+exports.isNavigator = typeof navigator !== 'undefined';

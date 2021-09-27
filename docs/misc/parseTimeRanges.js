@@ -1,4 +1,6 @@
-export default function parseTimeRanges(ranges) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+function parseTimeRanges(ranges) {
     var result = [];
     for (var i = 0; i < ranges.length; i++) {
         result.push({
@@ -8,3 +10,4 @@ export default function parseTimeRanges(ranges) {
     }
     return result;
 }
+exports.default = parseTimeRanges;

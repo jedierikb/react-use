@@ -1,15 +1,18 @@
-import writeText from 'copy-to-clipboard';
-import { useCallback } from 'react';
-import useMountedState from './useMountedState';
-import useSetState from './useSetState';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = require("tslib");
+var copy_to_clipboard_1 = tslib_1.__importDefault(require("copy-to-clipboard"));
+var react_1 = require("react");
+var useMountedState_1 = tslib_1.__importDefault(require("./useMountedState"));
+var useSetState_1 = tslib_1.__importDefault(require("./useSetState"));
 var useCopyToClipboard = function () {
-    var isMounted = useMountedState();
-    var _a = useSetState({
+    var isMounted = useMountedState_1.default();
+    var _a = useSetState_1.default({
         value: undefined,
         error: undefined,
         noUserInteraction: true,
     }), state = _a[0], setState = _a[1];
-    var copyToClipboard = useCallback(function (value) {
+    var copyToClipboard = react_1.useCallback(function (value) {
         if (!isMounted()) {
             return;
         }
@@ -41,7 +44,7 @@ var useCopyToClipboard = function () {
                 return;
             }
             normalizedValue = value.toString();
-            noUserInteraction = writeText(normalizedValue);
+            noUserInteraction = copy_to_clipboard_1.default(normalizedValue);
             setState({
                 value: normalizedValue,
                 error: undefined,
@@ -58,4 +61,4 @@ var useCopyToClipboard = function () {
     }, []);
     return [state, copyToClipboard];
 };
-export default useCopyToClipboard;
+exports.default = useCopyToClipboard;

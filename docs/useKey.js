@@ -1,6 +1,9 @@
-import { useMemo } from 'react';
-import useEvent from './useEvent';
-import { noop } from './misc/util';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = require("tslib");
+var react_1 = require("react");
+var useEvent_1 = tslib_1.__importDefault(require("./useEvent"));
+var util_1 = require("./misc/util");
 var createKeyPredicate = function (keyFilter) {
     return typeof keyFilter === 'function'
         ? keyFilter
@@ -11,11 +14,11 @@ var createKeyPredicate = function (keyFilter) {
                 : function () { return false; };
 };
 var useKey = function (key, fn, opts, deps) {
-    if (fn === void 0) { fn = noop; }
+    if (fn === void 0) { fn = util_1.noop; }
     if (opts === void 0) { opts = {}; }
     if (deps === void 0) { deps = [key]; }
     var _a = opts.event, event = _a === void 0 ? 'keydown' : _a, target = opts.target, options = opts.options;
-    var useMemoHandler = useMemo(function () {
+    var useMemoHandler = react_1.useMemo(function () {
         var predicate = createKeyPredicate(key);
         var handler = function (handlerEvent) {
             if (predicate(handlerEvent)) {
@@ -24,6 +27,6 @@ var useKey = function (key, fn, opts, deps) {
         };
         return handler;
     }, deps);
-    useEvent(event, useMemoHandler, target, options);
+    useEvent_1.default(event, useMemoHandler, target, options);
 };
-export default useKey;
+exports.default = useKey;

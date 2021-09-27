@@ -1,11 +1,13 @@
-import { useEffect, useState } from 'react';
-import { isBrowser } from './misc/util';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var react_1 = require("react");
+var util_1 = require("./misc/util");
 var useSessionStorage = function (key, initialValue, raw) {
-    if (!isBrowser) {
+    if (!util_1.isBrowser) {
         return [initialValue, function () { }];
     }
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    var _a = useState(function () {
+    var _a = react_1.useState(function () {
         try {
             var sessionStorageValue = sessionStorage.getItem(key);
             if (typeof sessionStorageValue !== 'string') {
@@ -24,7 +26,7 @@ var useSessionStorage = function (key, initialValue, raw) {
         }
     }), state = _a[0], setState = _a[1];
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    useEffect(function () {
+    react_1.useEffect(function () {
         try {
             var serializedState = raw ? String(state) : JSON.stringify(state);
             sessionStorage.setItem(key, serializedState);
@@ -36,4 +38,4 @@ var useSessionStorage = function (key, initialValue, raw) {
     });
     return [state, setState];
 };
-export default useSessionStorage;
+exports.default = useSessionStorage;

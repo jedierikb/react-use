@@ -1,7 +1,9 @@
-import { __assign } from "tslib";
-import { useEffect, useState } from 'react';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = require("tslib");
+var react_1 = require("react");
 var useGeolocation = function (options) {
-    var _a = useState({
+    var _a = react_1.useState({
         loading: true,
         accuracy: null,
         altitude: null,
@@ -30,9 +32,9 @@ var useGeolocation = function (options) {
         }
     };
     var onEventError = function (error) {
-        return mounted && setState(function (oldState) { return (__assign(__assign({}, oldState), { loading: false, error: error })); });
+        return mounted && setState(function (oldState) { return (tslib_1.__assign(tslib_1.__assign({}, oldState), { loading: false, error: error })); });
     };
-    useEffect(function () {
+    react_1.useEffect(function () {
         navigator.geolocation.getCurrentPosition(onEvent, onEventError, options);
         watchId = navigator.geolocation.watchPosition(onEvent, onEventError, options);
         return function () {
@@ -42,4 +44,4 @@ var useGeolocation = function (options) {
     }, []);
     return state;
 };
-export default useGeolocation;
+exports.default = useGeolocation;

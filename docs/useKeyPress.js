@@ -1,9 +1,12 @@
-import { useState } from 'react';
-import useKey from './useKey';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = require("tslib");
+var react_1 = require("react");
+var useKey_1 = tslib_1.__importDefault(require("./useKey"));
 var useKeyPress = function (keyFilter) {
-    var _a = useState([false, null]), state = _a[0], set = _a[1];
-    useKey(keyFilter, function (event) { return set([true, event]); }, { event: 'keydown' }, [state]);
-    useKey(keyFilter, function (event) { return set([false, event]); }, { event: 'keyup' }, [state]);
+    var _a = react_1.useState([false, null]), state = _a[0], set = _a[1];
+    useKey_1.default(keyFilter, function (event) { return set([true, event]); }, { event: 'keydown' }, [state]);
+    useKey_1.default(keyFilter, function (event) { return set([false, event]); }, { event: 'keyup' }, [state]);
     return state;
 };
-export default useKeyPress;
+exports.default = useKeyPress;

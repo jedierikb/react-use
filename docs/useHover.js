@@ -1,14 +1,17 @@
-import * as React from 'react';
-import { noop } from './misc/util';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = require("tslib");
+var React = tslib_1.__importStar(require("react"));
+var util_1 = require("./misc/util");
 var useState = React.useState;
 var useHover = function (element) {
     var _a = useState(false), state = _a[0], setState = _a[1];
     var onMouseEnter = function (originalOnMouseEnter) { return function (event) {
-        (originalOnMouseEnter || noop)(event);
+        (originalOnMouseEnter || util_1.noop)(event);
         setState(true);
     }; };
     var onMouseLeave = function (originalOnMouseLeave) { return function (event) {
-        (originalOnMouseLeave || noop)(event);
+        (originalOnMouseLeave || util_1.noop)(event);
         setState(false);
     }; };
     if (typeof element === 'function') {
@@ -20,4 +23,4 @@ var useHover = function (element) {
     });
     return [el, state];
 };
-export default useHover;
+exports.default = useHover;

@@ -1,15 +1,18 @@
-import { useCallback, useMemo, useRef, useState } from 'react';
-import { useFirstMountState } from './useFirstMountState';
-import { resolveHookState } from './misc/hookState';
-export function useStateWithHistory(initialState, capacity, initialHistory) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.useStateWithHistory = void 0;
+var react_1 = require("react");
+var useFirstMountState_1 = require("./useFirstMountState");
+var hookState_1 = require("./misc/hookState");
+function useStateWithHistory(initialState, capacity, initialHistory) {
     if (capacity === void 0) { capacity = 10; }
     if (capacity < 1) {
         throw new Error("Capacity has to be greater than 1, got '" + capacity + "'");
     }
-    var isFirstMount = useFirstMountState();
-    var _a = useState(initialState), state = _a[0], innerSetState = _a[1];
-    var history = useRef((initialHistory !== null && initialHistory !== void 0 ? initialHistory : []));
-    var historyPosition = useRef(0);
+    var isFirstMount = useFirstMountState_1.useFirstMountState();
+    var _a = react_1.useState(initialState), state = _a[0], innerSetState = _a[1];
+    var history = react_1.useRef((initialHistory !== null && initialHistory !== void 0 ? initialHistory : []));
+    var historyPosition = react_1.useRef(0);
     // do the states manipulation only on first mount, no sense to load re-renders with useless calculations
     if (isFirstMount) {
         if (history.current.length) {
@@ -28,9 +31,9 @@ export function useStateWithHistory(initialState, capacity, initialHistory) {
         }
         historyPosition.current = history.current.length && history.current.length - 1;
     }
-    var setState = useCallback(function (newState) {
+    var setState = react_1.useCallback(function (newState) {
         innerSetState(function (currentState) {
-            newState = resolveHookState(newState, currentState);
+            newState = hookState_1.resolveHookState(newState, currentState);
             // is state has changed
             if (newState !== currentState) {
                 // if current position is not the last - pop element to the right
@@ -46,7 +49,7 @@ export function useStateWithHistory(initialState, capacity, initialHistory) {
             return newState;
         });
     }, [state, capacity]);
-    var historyState = useMemo(function () { return ({
+    var historyState = react_1.useMemo(function () { return ({
         history: history.current,
         position: historyPosition.current,
         capacity: capacity,
@@ -87,3 +90,4 @@ export function useStateWithHistory(initialState, capacity, initialHistory) {
     }); }, [state]);
     return [state, setState, historyState];
 }
+exports.useStateWithHistory = useStateWithHistory;

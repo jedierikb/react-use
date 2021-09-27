@@ -1,11 +1,13 @@
-import { useMemo, useReducer } from 'react';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var react_1 = require("react");
 var useMethods = function (createMethods, initialState) {
-    var reducer = useMemo(function () { return function (reducerState, action) {
+    var reducer = react_1.useMemo(function () { return function (reducerState, action) {
         var _a;
         return (_a = createMethods(reducerState))[action.type].apply(_a, action.payload);
     }; }, [createMethods]);
-    var _a = useReducer(reducer, initialState), state = _a[0], dispatch = _a[1];
-    var wrappedMethods = useMemo(function () {
+    var _a = react_1.useReducer(reducer, initialState), state = _a[0], dispatch = _a[1];
+    var wrappedMethods = react_1.useMemo(function () {
         var actionTypes = Object.keys(createMethods(initialState));
         return actionTypes.reduce(function (acc, type) {
             acc[type] = function () {
@@ -20,4 +22,4 @@ var useMethods = function (createMethods, initialState) {
     }, [createMethods, initialState]);
     return [state, wrappedMethods];
 };
-export default useMethods;
+exports.default = useMethods;

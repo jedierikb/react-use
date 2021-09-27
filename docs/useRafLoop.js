@@ -1,17 +1,19 @@
-import { useCallback, useEffect, useMemo, useRef } from 'react';
-export default function useRafLoop(callback, initiallyActive) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var react_1 = require("react");
+function useRafLoop(callback, initiallyActive) {
     if (initiallyActive === void 0) { initiallyActive = true; }
-    var raf = useRef(null);
-    var rafActivity = useRef(false);
-    var rafCallback = useRef(callback);
+    var raf = react_1.useRef(null);
+    var rafActivity = react_1.useRef(false);
+    var rafCallback = react_1.useRef(callback);
     rafCallback.current = callback;
-    var step = useCallback(function (time) {
+    var step = react_1.useCallback(function (time) {
         if (rafActivity.current) {
             rafCallback.current(time);
             raf.current = requestAnimationFrame(step);
         }
     }, []);
-    var result = useMemo(function () {
+    var result = react_1.useMemo(function () {
         return [
             function () {
                 // stop
@@ -30,7 +32,7 @@ export default function useRafLoop(callback, initiallyActive) {
             function () { return rafActivity.current; },
         ];
     }, []);
-    useEffect(function () {
+    react_1.useEffect(function () {
         if (initiallyActive) {
             result[1]();
         }
@@ -39,3 +41,4 @@ export default function useRafLoop(callback, initiallyActive) {
     }, []);
     return result;
 }
+exports.default = useRafLoop;

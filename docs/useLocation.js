@@ -1,5 +1,7 @@
-import { useEffect, useState } from 'react';
-import { isBrowser, off, on } from './misc/util';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var react_1 = require("react");
+var util_1 = require("./misc/util");
 var patchHistoryMethod = function (method) {
     var history = window.history;
     var original = history[method];
@@ -11,7 +13,7 @@ var patchHistoryMethod = function (method) {
         return result;
     };
 };
-if (isBrowser) {
+if (util_1.isBrowser) {
     patchHistoryMethod('pushState');
     patchHistoryMethod('replaceState');
 }
@@ -38,21 +40,21 @@ var buildState = function (trigger) {
     };
 };
 var useLocationBrowser = function () {
-    var _a = useState(buildState('load')), state = _a[0], setState = _a[1];
-    useEffect(function () {
+    var _a = react_1.useState(buildState('load')), state = _a[0], setState = _a[1];
+    react_1.useEffect(function () {
         var onPopstate = function () { return setState(buildState('popstate')); };
         var onPushstate = function () { return setState(buildState('pushstate')); };
         var onReplacestate = function () { return setState(buildState('replacestate')); };
-        on(window, 'popstate', onPopstate);
-        on(window, 'pushstate', onPushstate);
-        on(window, 'replacestate', onReplacestate);
+        util_1.on(window, 'popstate', onPopstate);
+        util_1.on(window, 'pushstate', onPushstate);
+        util_1.on(window, 'replacestate', onReplacestate);
         return function () {
-            off(window, 'popstate', onPopstate);
-            off(window, 'pushstate', onPushstate);
-            off(window, 'replacestate', onReplacestate);
+            util_1.off(window, 'popstate', onPopstate);
+            util_1.off(window, 'pushstate', onPushstate);
+            util_1.off(window, 'replacestate', onReplacestate);
         };
     }, []);
     return state;
 };
 var hasEventConstructor = typeof Event === 'function';
-export default isBrowser && hasEventConstructor ? useLocationBrowser : useLocationServer;
+exports.default = util_1.isBrowser && hasEventConstructor ? useLocationBrowser : useLocationServer;

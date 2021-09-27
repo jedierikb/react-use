@@ -1,8 +1,10 @@
-import { useCallback, useState, useRef, useLayoutEffect } from 'react';
-import { isBrowser, noop } from './misc/util';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var react_1 = require("react");
+var util_1 = require("./misc/util");
 var useLocalStorage = function (key, initialValue, options) {
-    if (!isBrowser) {
-        return [initialValue, noop, noop];
+    if (!util_1.isBrowser) {
+        return [initialValue, util_1.noop, util_1.noop];
     }
     if (!key) {
         throw new Error('useLocalStorage key may not be falsy');
@@ -13,7 +15,7 @@ var useLocalStorage = function (key, initialValue, options) {
             : options.deserializer
         : JSON.parse;
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    var initializer = useRef(function (key) {
+    var initializer = react_1.useRef(function (key) {
         try {
             var serializer = options ? (options.raw ? String : options.serializer) : JSON.stringify;
             var localStorageValue = localStorage.getItem(key);
@@ -33,11 +35,11 @@ var useLocalStorage = function (key, initialValue, options) {
         }
     });
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    var _a = useState(function () { return initializer.current(key); }), state = _a[0], setState = _a[1];
+    var _a = react_1.useState(function () { return initializer.current(key); }), state = _a[0], setState = _a[1];
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    useLayoutEffect(function () { return setState(initializer.current(key)); }, [key]);
+    react_1.useLayoutEffect(function () { return setState(initializer.current(key)); }, [key]);
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    var set = useCallback(function (valOrFunc) {
+    var set = react_1.useCallback(function (valOrFunc) {
         try {
             var newState = typeof valOrFunc === 'function' ? valOrFunc(state) : valOrFunc;
             if (typeof newState === 'undefined')
@@ -64,7 +66,7 @@ var useLocalStorage = function (key, initialValue, options) {
         }
     }, [key, setState]);
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    var remove = useCallback(function () {
+    var remove = react_1.useCallback(function () {
         try {
             localStorage.removeItem(key);
             setState(undefined);
@@ -76,4 +78,4 @@ var useLocalStorage = function (key, initialValue, options) {
     }, [key, setState]);
     return [state, set, remove];
 };
-export default useLocalStorage;
+exports.default = useLocalStorage;

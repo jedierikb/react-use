@@ -1,8 +1,10 @@
-import { useReducer } from 'react';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var react_1 = require("react");
 var toggleReducer = function (state, nextValue) {
     return typeof nextValue === 'boolean' ? nextValue : !state;
 };
 var useToggle = function (initialValue) {
-    return useReducer(toggleReducer, initialValue);
+    return react_1.useReducer(toggleReducer, initialValue);
 };
-export default useToggle;
+exports.default = useToggle;

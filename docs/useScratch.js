@@ -1,18 +1,21 @@
-import { __assign, __rest } from "tslib";
-import { cloneElement, useEffect, useRef, useState } from 'react';
-import { render } from 'react-universal-interface';
-import useLatest from './useLatest';
-import { noop, off, on } from './misc/util';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ScratchSensor = void 0;
+var tslib_1 = require("tslib");
+var react_1 = require("react");
+var react_universal_interface_1 = require("react-universal-interface");
+var useLatest_1 = tslib_1.__importDefault(require("./useLatest"));
+var util_1 = require("./misc/util");
 var useScratch = function (params) {
     if (params === void 0) { params = {}; }
     var disabled = params.disabled;
-    var paramsRef = useLatest(params);
-    var _a = useState({ isScratching: false }), state = _a[0], setState = _a[1];
-    var refState = useRef(state);
-    var refScratching = useRef(false);
-    var refAnimationFrame = useRef(null);
-    var _b = useState(null), el = _b[0], setEl = _b[1];
-    useEffect(function () {
+    var paramsRef = useLatest_1.default(params);
+    var _a = react_1.useState({ isScratching: false }), state = _a[0], setState = _a[1];
+    var refState = react_1.useRef(state);
+    var refScratching = react_1.useRef(false);
+    var refAnimationFrame = react_1.useRef(null);
+    var _b = react_1.useState(null), el = _b[0], setEl = _b[1];
+    react_1.useEffect(function () {
         if (disabled)
             return;
         if (!el)
@@ -26,9 +29,9 @@ var useScratch = function (params) {
                 var x = docX - elX;
                 var y = docY - elY;
                 setState(function (oldState) {
-                    var newState = __assign(__assign({}, oldState), { dx: x - (oldState.x || 0), dy: y - (oldState.y || 0), end: Date.now(), isScratching: true });
+                    var newState = tslib_1.__assign(tslib_1.__assign({}, oldState), { dx: x - (oldState.x || 0), dy: y - (oldState.y || 0), end: Date.now(), isScratching: true });
                     refState.current = newState;
-                    (paramsRef.current.onScratch || noop)(newState);
+                    (paramsRef.current.onScratch || util_1.noop)(newState);
                     return newState;
                 });
             });
@@ -45,13 +48,13 @@ var useScratch = function (params) {
             if (!refScratching.current)
                 return;
             refScratching.current = false;
-            refState.current = __assign(__assign({}, refState.current), { isScratching: false });
-            (paramsRef.current.onScratchEnd || noop)(refState.current);
+            refState.current = tslib_1.__assign(tslib_1.__assign({}, refState.current), { isScratching: false });
+            (paramsRef.current.onScratchEnd || util_1.noop)(refState.current);
             setState({ isScratching: false });
-            off(window, 'mousemove', onMouseMove);
-            off(window, 'touchmove', onTouchMove);
-            off(window, 'mouseup', onMouseUp);
-            off(window, 'touchend', onTouchEnd);
+            util_1.off(window, 'mousemove', onMouseMove);
+            util_1.off(window, 'touchmove', onTouchMove);
+            util_1.off(window, 'mouseup', onMouseUp);
+            util_1.off(window, 'touchend', onTouchEnd);
         };
         onMouseUp = stopScratching;
         onTouchEnd = stopScratching;
@@ -80,12 +83,12 @@ var useScratch = function (params) {
                 elY: elY,
             };
             refState.current = newState;
-            (paramsRef.current.onScratchStart || noop)(newState);
+            (paramsRef.current.onScratchStart || util_1.noop)(newState);
             setState(newState);
-            on(window, 'mousemove', onMouseMove);
-            on(window, 'touchmove', onTouchMove);
-            on(window, 'mouseup', onMouseUp);
-            on(window, 'touchend', onTouchEnd);
+            util_1.on(window, 'mousemove', onMouseMove);
+            util_1.on(window, 'touchmove', onTouchMove);
+            util_1.on(window, 'mouseup', onMouseUp);
+            util_1.on(window, 'touchend', onTouchEnd);
         };
         var onMouseDown = function (event) {
             refScratching.current = true;
@@ -95,15 +98,15 @@ var useScratch = function (params) {
             refScratching.current = true;
             startScratching(event.changedTouches[0].pageX, event.changedTouches[0].pageY);
         };
-        on(el, 'mousedown', onMouseDown);
-        on(el, 'touchstart', onTouchStart);
+        util_1.on(el, 'mousedown', onMouseDown);
+        util_1.on(el, 'touchstart', onTouchStart);
         return function () {
-            off(el, 'mousedown', onMouseDown);
-            off(el, 'touchstart', onTouchStart);
-            off(window, 'mousemove', onMouseMove);
-            off(window, 'touchmove', onTouchMove);
-            off(window, 'mouseup', onMouseUp);
-            off(window, 'touchend', onTouchEnd);
+            util_1.off(el, 'mousedown', onMouseDown);
+            util_1.off(el, 'touchstart', onTouchStart);
+            util_1.off(window, 'mousemove', onMouseMove);
+            util_1.off(window, 'touchmove', onTouchMove);
+            util_1.off(window, 'mouseup', onMouseUp);
+            util_1.off(window, 'touchend', onTouchEnd);
             if (refAnimationFrame.current)
                 cancelAnimationFrame(refAnimationFrame.current);
             refAnimationFrame.current = null;
@@ -114,11 +117,11 @@ var useScratch = function (params) {
     }, [el, disabled, paramsRef]);
     return [setEl, state];
 };
-export var ScratchSensor = function (props) {
-    var children = props.children, params = __rest(props, ["children"]);
+var ScratchSensor = function (props) {
+    var children = props.children, params = tslib_1.__rest(props, ["children"]);
     var _a = useScratch(params), ref = _a[0], state = _a[1];
-    var element = render(props, state);
-    return cloneElement(element, __assign(__assign({}, element.props), { ref: function (el) {
+    var element = react_universal_interface_1.render(props, state);
+    return react_1.cloneElement(element, tslib_1.__assign(tslib_1.__assign({}, element.props), { ref: function (el) {
             if (element.props.ref) {
                 if (typeof element.props.ref === 'object')
                     element.props.ref.current = el;
@@ -128,4 +131,5 @@ export var ScratchSensor = function (props) {
             ref(el);
         } }));
 };
-export default useScratch;
+exports.ScratchSensor = ScratchSensor;
+exports.default = useScratch;

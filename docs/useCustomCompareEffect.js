@@ -1,4 +1,6 @@
-import { useEffect, useRef } from 'react';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var react_1 = require("react");
 var isPrimitive = function (val) { return val !== Object(val); };
 var useCustomCompareEffect = function (effect, deps, depsEqual) {
     if (process.env.NODE_ENV !== 'production') {
@@ -12,10 +14,10 @@ var useCustomCompareEffect = function (effect, deps, depsEqual) {
             console.warn('`useCustomCompareEffect` should be used with depsEqual callback for comparing deps list');
         }
     }
-    var ref = useRef(undefined);
+    var ref = react_1.useRef(undefined);
     if (!ref.current || !depsEqual(deps, ref.current)) {
         ref.current = deps;
     }
-    useEffect(effect, ref.current);
+    react_1.useEffect(effect, ref.current);
 };
-export default useCustomCompareEffect;
+exports.default = useCustomCompareEffect;

@@ -1,12 +1,15 @@
-import { useEffect } from 'react';
-import { isBrowser, off, on } from './misc/util';
-import useRafState from './useRafState';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = require("tslib");
+var react_1 = require("react");
+var util_1 = require("./misc/util");
+var useRafState_1 = tslib_1.__importDefault(require("./useRafState"));
 var useWindowScroll = function () {
-    var _a = useRafState(function () { return ({
-        x: isBrowser ? window.pageXOffset : 0,
-        y: isBrowser ? window.pageYOffset : 0,
+    var _a = useRafState_1.default(function () { return ({
+        x: util_1.isBrowser ? window.pageXOffset : 0,
+        y: util_1.isBrowser ? window.pageYOffset : 0,
     }); }), state = _a[0], setState = _a[1];
-    useEffect(function () {
+    react_1.useEffect(function () {
         var handler = function () {
             setState(function (state) {
                 var pageXOffset = window.pageXOffset, pageYOffset = window.pageYOffset;
@@ -23,14 +26,14 @@ var useWindowScroll = function () {
         //We have to update window scroll at mount, before subscription.
         //Window scroll may be changed between render and effect handler.
         handler();
-        on(window, 'scroll', handler, {
+        util_1.on(window, 'scroll', handler, {
             capture: false,
             passive: true,
         });
         return function () {
-            off(window, 'scroll', handler);
+            util_1.off(window, 'scroll', handler);
         };
     }, []);
     return state;
 };
-export default useWindowScroll;
+exports.default = useWindowScroll;

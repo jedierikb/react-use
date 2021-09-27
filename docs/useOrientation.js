@@ -1,13 +1,15 @@
-import { useEffect, useState } from 'react';
-import { off, on } from './misc/util';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var react_1 = require("react");
+var util_1 = require("./misc/util");
 var defaultState = {
     angle: 0,
     type: 'landscape-primary',
 };
 var useOrientation = function (initialState) {
     if (initialState === void 0) { initialState = defaultState; }
-    var _a = useState(initialState), state = _a[0], setState = _a[1];
-    useEffect(function () {
+    var _a = react_1.useState(initialState), state = _a[0], setState = _a[1];
+    react_1.useEffect(function () {
         var screen = window.screen;
         var mounted = true;
         var onChange = function () {
@@ -28,13 +30,13 @@ var useOrientation = function (initialState) {
                 }
             }
         };
-        on(window, 'orientationchange', onChange);
+        util_1.on(window, 'orientationchange', onChange);
         onChange();
         return function () {
             mounted = false;
-            off(window, 'orientationchange', onChange);
+            util_1.off(window, 'orientationchange', onChange);
         };
     }, []);
     return state;
 };
-export default useOrientation;
+exports.default = useOrientation;

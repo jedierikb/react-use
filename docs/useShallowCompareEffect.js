@@ -1,8 +1,11 @@
-import { equal as isShallowEqual } from 'fast-shallow-equal';
-import useCustomCompareEffect from './useCustomCompareEffect';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = require("tslib");
+var fast_shallow_equal_1 = require("fast-shallow-equal");
+var useCustomCompareEffect_1 = tslib_1.__importDefault(require("./useCustomCompareEffect"));
 var isPrimitive = function (val) { return val !== Object(val); };
 var shallowEqualDepsList = function (prevDeps, nextDeps) {
-    return prevDeps.every(function (dep, index) { return isShallowEqual(dep, nextDeps[index]); });
+    return prevDeps.every(function (dep, index) { return fast_shallow_equal_1.equal(dep, nextDeps[index]); });
 };
 var useShallowCompareEffect = function (effect, deps) {
     if (process.env.NODE_ENV !== 'production') {
@@ -13,6 +16,6 @@ var useShallowCompareEffect = function (effect, deps) {
             console.warn('`useShallowCompareEffect` should not be used with dependencies that are all primitive values. Use React.useEffect instead.');
         }
     }
-    useCustomCompareEffect(effect, deps, shallowEqualDepsList);
+    useCustomCompareEffect_1.default(effect, deps, shallowEqualDepsList);
 };
-export default useShallowCompareEffect;
+exports.default = useShallowCompareEffect;

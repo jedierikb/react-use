@@ -1,14 +1,17 @@
-import { useMemo, useRef } from 'react';
-import useUpdate from './useUpdate';
-import { resolveHookState } from './misc/hookState';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = require("tslib");
+var react_1 = require("react");
+var useUpdate_1 = tslib_1.__importDefault(require("./useUpdate"));
+var hookState_1 = require("./misc/hookState");
 function useList(initialList) {
     if (initialList === void 0) { initialList = []; }
-    var list = useRef(resolveHookState(initialList));
-    var update = useUpdate();
-    var actions = useMemo(function () {
+    var list = react_1.useRef(hookState_1.resolveHookState(initialList));
+    var update = useUpdate_1.default();
+    var actions = react_1.useMemo(function () {
         var a = {
             set: function (newList) {
-                list.current = resolveHookState(newList, list.current);
+                list.current = hookState_1.resolveHookState(newList, list.current);
                 update();
             },
             push: function () {
@@ -60,7 +63,7 @@ function useList(initialList) {
                 actions.set([]);
             },
             reset: function () {
-                actions.set(resolveHookState(initialList).slice());
+                actions.set(hookState_1.resolveHookState(initialList).slice());
             },
         };
         /**
@@ -71,4 +74,4 @@ function useList(initialList) {
     }, []);
     return [list.current, actions];
 }
-export default useList;
+exports.default = useList;

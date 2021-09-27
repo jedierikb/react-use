@@ -1,4 +1,6 @@
-import { useEffect, useLayoutEffect } from 'react';
-import { isBrowser } from './misc/util';
-var useIsomorphicLayoutEffect = isBrowser ? useLayoutEffect : useEffect;
-export default useIsomorphicLayoutEffect;
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var react_1 = require("react");
+var util_1 = require("./misc/util");
+var useIsomorphicLayoutEffect = util_1.isBrowser ? react_1.useLayoutEffect : react_1.useEffect;
+exports.default = useIsomorphicLayoutEffect;

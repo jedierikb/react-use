@@ -1,11 +1,13 @@
-import { __spreadArrays } from "tslib";
-import { useState } from 'react';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = require("tslib");
+var react_1 = require("react");
 var useQueue = function (initialValue) {
     if (initialValue === void 0) { initialValue = []; }
-    var _a = useState(initialValue), state = _a[0], set = _a[1];
+    var _a = react_1.useState(initialValue), state = _a[0], set = _a[1];
     return {
         add: function (value) {
-            set(function (queue) { return __spreadArrays(queue, [value]); });
+            set(function (queue) { return tslib_1.__spreadArrays(queue, [value]); });
         },
         remove: function () {
             var result;
@@ -27,4 +29,4 @@ var useQueue = function (initialValue) {
         },
     };
 };
-export default useQueue;
+exports.default = useQueue;

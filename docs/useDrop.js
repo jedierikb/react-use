@@ -1,19 +1,21 @@
-import { __spreadArrays } from "tslib";
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { noop, off, on } from './misc/util';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = require("tslib");
+var react_1 = require("react");
+var util_1 = require("./misc/util");
 var createProcess = function (options) { return function (dataTransfer, event) {
     var uri = dataTransfer.getData('text/uri-list');
     if (uri) {
-        (options.onUri || noop)(uri, event);
+        (options.onUri || util_1.noop)(uri, event);
         return;
     }
     if (dataTransfer.files && dataTransfer.files.length) {
-        (options.onFiles || noop)(Array.from(dataTransfer.files), event);
+        (options.onFiles || util_1.noop)(Array.from(dataTransfer.files), event);
         return;
     }
     if (event.clipboardData) {
         var text = event.clipboardData.getData('text');
-        (options.onText || noop)(text, event);
+        (options.onText || util_1.noop)(text, event);
         return;
     }
 }; };
@@ -21,10 +23,10 @@ var useDrop = function (options, args) {
     if (options === void 0) { options = {}; }
     if (args === void 0) { args = []; }
     var onFiles = options.onFiles, onText = options.onText, onUri = options.onUri;
-    var _a = useState(false), over = _a[0], setOverRaw = _a[1];
-    var setOver = useCallback(setOverRaw, []);
-    var process = useMemo(function () { return createProcess(options); }, [onFiles, onText, onUri]);
-    useEffect(function () {
+    var _a = react_1.useState(false), over = _a[0], setOverRaw = _a[1];
+    var setOver = react_1.useCallback(setOverRaw, []);
+    var process = react_1.useMemo(function () { return createProcess(options); }, [onFiles, onText, onUri]);
+    react_1.useEffect(function () {
         var onDragOver = function (event) {
             event.preventDefault();
             setOver(true);
@@ -47,23 +49,23 @@ var useDrop = function (options, args) {
         var onPaste = function (event) {
             process(event.clipboardData, event);
         };
-        on(document, 'dragover', onDragOver);
-        on(document, 'dragenter', onDragEnter);
-        on(document, 'dragleave', onDragLeave);
-        on(document, 'dragexit', onDragExit);
-        on(document, 'drop', onDrop);
+        util_1.on(document, 'dragover', onDragOver);
+        util_1.on(document, 'dragenter', onDragEnter);
+        util_1.on(document, 'dragleave', onDragLeave);
+        util_1.on(document, 'dragexit', onDragExit);
+        util_1.on(document, 'drop', onDrop);
         if (onText) {
-            on(document, 'paste', onPaste);
+            util_1.on(document, 'paste', onPaste);
         }
         return function () {
-            off(document, 'dragover', onDragOver);
-            off(document, 'dragenter', onDragEnter);
-            off(document, 'dragleave', onDragLeave);
-            off(document, 'dragexit', onDragExit);
-            off(document, 'drop', onDrop);
-            off(document, 'paste', onPaste);
+            util_1.off(document, 'dragover', onDragOver);
+            util_1.off(document, 'dragenter', onDragEnter);
+            util_1.off(document, 'dragleave', onDragLeave);
+            util_1.off(document, 'dragexit', onDragExit);
+            util_1.off(document, 'drop', onDrop);
+            util_1.off(document, 'paste', onPaste);
         };
-    }, __spreadArrays([process], args));
+    }, tslib_1.__spreadArrays([process], args));
     return { over: over };
 };
-export default useDrop;
+exports.default = useDrop;

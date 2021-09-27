@@ -1,9 +1,11 @@
-import { useEffect, useState } from 'react';
-import { noop, off, on } from './misc/util';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var react_1 = require("react");
+var util_1 = require("./misc/util");
 // const usePermission = <T extends PermissionDescriptor>(permissionDesc: T): IState => {
 var usePermission = function (permissionDesc) {
-    var _a = useState(''), state = _a[0], setState = _a[1];
-    useEffect(function () {
+    var _a = react_1.useState(''), state = _a[0], setState = _a[1];
+    react_1.useEffect(function () {
         var mounted = true;
         var permissionStatus = null;
         var onChange = function () {
@@ -16,16 +18,16 @@ var usePermission = function (permissionDesc) {
             .query(permissionDesc)
             .then(function (status) {
             permissionStatus = status;
-            on(permissionStatus, 'change', onChange);
+            util_1.on(permissionStatus, 'change', onChange);
             onChange();
         })
-            .catch(noop);
+            .catch(util_1.noop);
         return function () {
-            permissionStatus && off(permissionStatus, 'change', onChange);
+            permissionStatus && util_1.off(permissionStatus, 'change', onChange);
             mounted = false;
             permissionStatus = null;
         };
     }, [permissionDesc]);
     return state;
 };
-export default usePermission;
+exports.default = usePermission;

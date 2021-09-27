@@ -1,5 +1,8 @@
-import { useCallback, useRef, useState } from 'react';
-import useUpdateEffect from '../useUpdateEffect';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = require("tslib");
+var react_1 = require("react");
+var useUpdateEffect_1 = tslib_1.__importDefault(require("../useUpdateEffect"));
 function composeMiddleware(chain) {
     return function (context, dispatch) {
         return chain.reduceRight(function (res, middleware) {
@@ -15,14 +18,14 @@ var createReducer = function () {
     var composedMiddleware = composeMiddleware(middlewares);
     return function (reducer, initialState, initializer) {
         if (initializer === void 0) { initializer = function (value) { return value; }; }
-        var ref = useRef(initializer(initialState));
-        var _a = useState(ref.current), setState = _a[1];
-        var dispatch = useCallback(function (action) {
+        var ref = react_1.useRef(initializer(initialState));
+        var _a = react_1.useState(ref.current), setState = _a[1];
+        var dispatch = react_1.useCallback(function (action) {
             ref.current = reducer(ref.current, action);
             setState(ref.current);
             return action;
         }, [reducer]);
-        var dispatchRef = useRef(composedMiddleware({
+        var dispatchRef = react_1.useRef(composedMiddleware({
             getState: function () { return ref.current; },
             dispatch: function () {
                 var args = [];
@@ -32,7 +35,7 @@ var createReducer = function () {
                 return dispatchRef.current.apply(dispatchRef, args);
             },
         }, dispatch));
-        useUpdateEffect(function () {
+        useUpdateEffect_1.default(function () {
             dispatchRef.current = composedMiddleware({
                 getState: function () { return ref.current; },
                 dispatch: function () {
@@ -47,4 +50,4 @@ var createReducer = function () {
         return [ref.current, dispatchRef.current];
     };
 };
-export default createReducer;
+exports.default = createReducer;

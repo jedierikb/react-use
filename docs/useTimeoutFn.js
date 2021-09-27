@@ -1,11 +1,13 @@
-import { useCallback, useEffect, useRef } from 'react';
-export default function useTimeoutFn(fn, ms) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var react_1 = require("react");
+function useTimeoutFn(fn, ms) {
     if (ms === void 0) { ms = 0; }
-    var ready = useRef(false);
-    var timeout = useRef();
-    var callback = useRef(fn);
-    var isReady = useCallback(function () { return ready.current; }, []);
-    var set = useCallback(function () {
+    var ready = react_1.useRef(false);
+    var timeout = react_1.useRef();
+    var callback = react_1.useRef(fn);
+    var isReady = react_1.useCallback(function () { return ready.current; }, []);
+    var set = react_1.useCallback(function () {
         ready.current = false;
         timeout.current && clearTimeout(timeout.current);
         timeout.current = setTimeout(function () {
@@ -13,18 +15,19 @@ export default function useTimeoutFn(fn, ms) {
             callback.current();
         }, ms);
     }, [ms]);
-    var clear = useCallback(function () {
+    var clear = react_1.useCallback(function () {
         ready.current = null;
         timeout.current && clearTimeout(timeout.current);
     }, []);
     // update ref when function changes
-    useEffect(function () {
+    react_1.useEffect(function () {
         callback.current = fn;
     }, [fn]);
     // set on mount, clear on unmount
-    useEffect(function () {
+    react_1.useEffect(function () {
         set();
         return clear;
     }, [ms]);
     return [isReady, clear, set];
 }
+exports.default = useTimeoutFn;

@@ -1,16 +1,19 @@
-import { easing } from 'ts-easing';
-import useRaf from './useRaf';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = require("tslib");
+var ts_easing_1 = require("ts-easing");
+var useRaf_1 = tslib_1.__importDefault(require("./useRaf"));
 var useTween = function (easingName, ms, delay) {
     if (easingName === void 0) { easingName = 'inCirc'; }
     if (ms === void 0) { ms = 200; }
     if (delay === void 0) { delay = 0; }
-    var fn = easing[easingName];
-    var t = useRaf(ms, delay);
+    var fn = ts_easing_1.easing[easingName];
+    var t = useRaf_1.default(ms, delay);
     if (process.env.NODE_ENV !== 'production') {
         if (typeof fn !== 'function') {
             console.error('useTween() expected "easingName" property to be a valid easing function name, like:' +
                 '"' +
-                Object.keys(easing).join('", "') +
+                Object.keys(ts_easing_1.easing).join('", "') +
                 '".');
             console.trace();
             return 0;
@@ -18,4 +21,4 @@ var useTween = function (easingName, ms, delay) {
     }
     return fn(t);
 };
-export default useTween;
+exports.default = useTween;

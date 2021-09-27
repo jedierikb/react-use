@@ -1,9 +1,11 @@
-import { __assign } from "tslib";
-import * as React from 'react';
-import { useEffect, useRef } from 'react';
-import useSetState from '../useSetState';
-import parseTimeRanges from '../misc/parseTimeRanges';
-export default function createHTMLMediaHook(tag) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = require("tslib");
+var React = tslib_1.__importStar(require("react"));
+var react_1 = require("react");
+var useSetState_1 = tslib_1.__importDefault(require("../useSetState"));
+var parseTimeRanges_1 = tslib_1.__importDefault(require("../misc/parseTimeRanges"));
+function createHTMLMediaHook(tag) {
     return function (elOrProps) {
         var element;
         var props;
@@ -14,7 +16,7 @@ export default function createHTMLMediaHook(tag) {
         else {
             props = elOrProps;
         }
-        var _a = useSetState({
+        var _a = useSetState_1.default({
             buffered: [],
             time: 0,
             duration: 0,
@@ -23,7 +25,7 @@ export default function createHTMLMediaHook(tag) {
             volume: 1,
             playing: false,
         }), state = _a[0], setState = _a[1];
-        var ref = useRef(null);
+        var ref = react_1.useRef(null);
         var wrapEvent = function (userEvent, proxyEvent) {
             return function (event) {
                 try {
@@ -56,7 +58,7 @@ export default function createHTMLMediaHook(tag) {
             var duration = el.duration, buffered = el.buffered;
             setState({
                 duration: duration,
-                buffered: parseTimeRanges(buffered),
+                buffered: parseTimeRanges_1.default(buffered),
             });
         };
         var onTimeUpdate = function () {
@@ -71,13 +73,13 @@ export default function createHTMLMediaHook(tag) {
             if (!el) {
                 return;
             }
-            setState({ buffered: parseTimeRanges(el.buffered) });
+            setState({ buffered: parseTimeRanges_1.default(el.buffered) });
         };
         if (element) {
-            element = React.cloneElement(element, __assign(__assign({ controls: false }, props), { ref: ref, onPlay: wrapEvent(props.onPlay, onPlay), onPlaying: wrapEvent(props.onPlaying, onPlaying), onWaiting: wrapEvent(props.onWaiting, onWaiting), onPause: wrapEvent(props.onPause, onPause), onVolumeChange: wrapEvent(props.onVolumeChange, onVolumeChange), onDurationChange: wrapEvent(props.onDurationChange, onDurationChange), onTimeUpdate: wrapEvent(props.onTimeUpdate, onTimeUpdate), onProgress: wrapEvent(props.onProgress, onProgress) }));
+            element = React.cloneElement(element, tslib_1.__assign(tslib_1.__assign({ controls: false }, props), { ref: ref, onPlay: wrapEvent(props.onPlay, onPlay), onPlaying: wrapEvent(props.onPlaying, onPlaying), onWaiting: wrapEvent(props.onWaiting, onWaiting), onPause: wrapEvent(props.onPause, onPause), onVolumeChange: wrapEvent(props.onVolumeChange, onVolumeChange), onDurationChange: wrapEvent(props.onDurationChange, onDurationChange), onTimeUpdate: wrapEvent(props.onTimeUpdate, onTimeUpdate), onProgress: wrapEvent(props.onProgress, onProgress) }));
         }
         else {
-            element = React.createElement(tag, __assign(__assign({ controls: false }, props), { ref: ref, onPlay: wrapEvent(props.onPlay, onPlay), onPlaying: wrapEvent(props.onPlaying, onPlaying), onWaiting: wrapEvent(props.onWaiting, onWaiting), onPause: wrapEvent(props.onPause, onPause), onVolumeChange: wrapEvent(props.onVolumeChange, onVolumeChange), onDurationChange: wrapEvent(props.onDurationChange, onDurationChange), onTimeUpdate: wrapEvent(props.onTimeUpdate, onTimeUpdate), onProgress: wrapEvent(props.onProgress, onProgress) })); // TODO: fix this typing.
+            element = React.createElement(tag, tslib_1.__assign(tslib_1.__assign({ controls: false }, props), { ref: ref, onPlay: wrapEvent(props.onPlay, onPlay), onPlaying: wrapEvent(props.onPlaying, onPlaying), onWaiting: wrapEvent(props.onWaiting, onWaiting), onPause: wrapEvent(props.onPause, onPause), onVolumeChange: wrapEvent(props.onVolumeChange, onVolumeChange), onDurationChange: wrapEvent(props.onDurationChange, onDurationChange), onTimeUpdate: wrapEvent(props.onTimeUpdate, onTimeUpdate), onProgress: wrapEvent(props.onProgress, onProgress) })); // TODO: fix this typing.
         }
         // Some browsers return `Promise` on `.play()` and may throw errors
         // if one tries to execute another `.play()` or `.pause()` while that
@@ -142,7 +144,7 @@ export default function createHTMLMediaHook(tag) {
                 el.muted = false;
             },
         };
-        useEffect(function () {
+        react_1.useEffect(function () {
             var el = ref.current;
             if (!el) {
                 if (process.env.NODE_ENV !== 'production') {
@@ -172,3 +174,4 @@ export default function createHTMLMediaHook(tag) {
         return [element, state, controls, ref];
     };
 }
+exports.default = createHTMLMediaHook;

@@ -1,6 +1,8 @@
-import { __assign } from "tslib";
-import { useCallback, useRef } from 'react';
-import useUpdate from './useUpdate';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = require("tslib");
+var react_1 = require("react");
+var useUpdate_1 = tslib_1.__importDefault(require("./useUpdate"));
 var useGetSetState = function (initialState) {
     if (initialState === void 0) { initialState = {}; }
     if (process.env.NODE_ENV !== 'production') {
@@ -8,10 +10,10 @@ var useGetSetState = function (initialState) {
             console.error('useGetSetState initial state must be an object.');
         }
     }
-    var update = useUpdate();
-    var state = useRef(__assign({}, initialState));
-    var get = useCallback(function () { return state.current; }, []);
-    var set = useCallback(function (patch) {
+    var update = useUpdate_1.default();
+    var state = react_1.useRef(tslib_1.__assign({}, initialState));
+    var get = react_1.useCallback(function () { return state.current; }, []);
+    var set = react_1.useCallback(function (patch) {
         if (!patch) {
             return;
         }
@@ -25,4 +27,4 @@ var useGetSetState = function (initialState) {
     }, []);
     return [get, set];
 };
-export default useGetSetState;
+exports.default = useGetSetState;

@@ -1,5 +1,8 @@
-import useIsomorphicLayoutEffect from './useIsomorphicLayoutEffect';
-import { off, on } from './misc/util';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = require("tslib");
+var useIsomorphicLayoutEffect_1 = tslib_1.__importDefault(require("./useIsomorphicLayoutEffect"));
+var util_1 = require("./misc/util");
 var isFocusedElementEditable = function () {
     var activeElement = document.activeElement, body = document.body;
     if (!activeElement) {
@@ -35,14 +38,14 @@ var isTypedCharGood = function (_a) {
     return false;
 };
 var useStartTyping = function (onStartTyping) {
-    useIsomorphicLayoutEffect(function () {
+    useIsomorphicLayoutEffect_1.default(function () {
         var keydown = function (event) {
             !isFocusedElementEditable() && isTypedCharGood(event) && onStartTyping(event);
         };
-        on(document, 'keydown', keydown);
+        util_1.on(document, 'keydown', keydown);
         return function () {
-            off(document, 'keydown', keydown);
+            util_1.off(document, 'keydown', keydown);
         };
     }, []);
 };
-export default useStartTyping;
+exports.default = useStartTyping;

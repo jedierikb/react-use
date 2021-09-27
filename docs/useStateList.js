@@ -1,21 +1,23 @@
-import { __assign } from "tslib";
-import { useMemo, useRef } from 'react';
-import useMountedState from './useMountedState';
-import useUpdate from './useUpdate';
-import useUpdateEffect from './useUpdateEffect';
-export default function useStateList(stateSet) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = require("tslib");
+var react_1 = require("react");
+var useMountedState_1 = tslib_1.__importDefault(require("./useMountedState"));
+var useUpdate_1 = tslib_1.__importDefault(require("./useUpdate"));
+var useUpdateEffect_1 = tslib_1.__importDefault(require("./useUpdateEffect"));
+function useStateList(stateSet) {
     if (stateSet === void 0) { stateSet = []; }
-    var isMounted = useMountedState();
-    var update = useUpdate();
-    var index = useRef(0);
+    var isMounted = useMountedState_1.default();
+    var update = useUpdate_1.default();
+    var index = react_1.useRef(0);
     // If new state list is shorter that before - switch to the last element
-    useUpdateEffect(function () {
+    useUpdateEffect_1.default(function () {
         if (stateSet.length <= index.current) {
             index.current = stateSet.length - 1;
             update();
         }
     }, [stateSet.length]);
-    var actions = useMemo(function () { return ({
+    var actions = react_1.useMemo(function () { return ({
         next: function () { return actions.setStateAt(index.current + 1); },
         prev: function () { return actions.setStateAt(index.current - 1); },
         setStateAt: function (newIndex) {
@@ -49,5 +51,6 @@ export default function useStateList(stateSet) {
             update();
         },
     }); }, [stateSet]);
-    return __assign({ state: stateSet[index.current], currentIndex: index.current }, actions);
+    return tslib_1.__assign({ state: stateSet[index.current], currentIndex: index.current }, actions);
 }
+exports.default = useStateList;

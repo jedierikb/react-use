@@ -1,12 +1,15 @@
-import { useEffect, useState } from 'react';
-import useMount from './useMount';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = require("tslib");
+var react_1 = require("react");
+var useMount_1 = tslib_1.__importDefault(require("./useMount"));
 var useKeyboardJs = function (combination) {
-    var _a = useState([false, null]), state = _a[0], set = _a[1];
-    var _b = useState(null), keyboardJs = _b[0], setKeyboardJs = _b[1];
-    useMount(function () {
-        import('keyboardjs').then(function (k) { return setKeyboardJs(k.default || k); });
+    var _a = react_1.useState([false, null]), state = _a[0], set = _a[1];
+    var _b = react_1.useState(null), keyboardJs = _b[0], setKeyboardJs = _b[1];
+    useMount_1.default(function () {
+        Promise.resolve().then(function () { return tslib_1.__importStar(require('keyboardjs')); }).then(function (k) { return setKeyboardJs(k.default || k); });
     });
-    useEffect(function () {
+    react_1.useEffect(function () {
         if (!keyboardJs) {
             return;
         }
@@ -19,4 +22,4 @@ var useKeyboardJs = function (combination) {
     }, [combination, keyboardJs]);
     return state;
 };
-export default useKeyboardJs;
+exports.default = useKeyboardJs;

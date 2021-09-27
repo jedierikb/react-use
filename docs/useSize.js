@@ -1,11 +1,13 @@
-import { __spreadArrays } from "tslib";
-import * as React from 'react';
-import { isBrowser, off, on } from './misc/util';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = require("tslib");
+var React = tslib_1.__importStar(require("react"));
+var util_1 = require("./misc/util");
 var useState = React.useState, useEffect = React.useEffect, useRef = React.useRef;
 var DRAF = function (callback) { return setTimeout(callback, 35); };
 var useSize = function (element, _a) {
     var _b = _a === void 0 ? {} : _a, _c = _b.width, width = _c === void 0 ? Infinity : _c, _d = _b.height, height = _d === void 0 ? Infinity : _d;
-    if (!isBrowser) {
+    if (!util_1.isBrowser) {
         return [
             typeof element === 'function' ? element({ width: width, height: height }) : element,
             { width: width, height: height },
@@ -31,7 +33,7 @@ var useSize = function (element, _a) {
         setState(size);
     };
     var onWindow = function (windowToListenOn) {
-        on(windowToListenOn, 'resize', setSize);
+        util_1.on(windowToListenOn, 'resize', setSize);
         DRAF(setSize);
     };
     // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -47,20 +49,20 @@ var useSize = function (element, _a) {
         }
         else {
             var onLoad_1 = function () {
-                on(iframe, 'load', onLoad_1);
+                util_1.on(iframe, 'load', onLoad_1);
                 window = iframe.contentWindow;
                 onWindow(window);
             };
-            off(iframe, 'load', onLoad_1);
+            util_1.off(iframe, 'load', onLoad_1);
         }
         return function () {
             if (window && window.removeEventListener) {
-                off(window, 'resize', setSize);
+                util_1.off(window, 'resize', setSize);
             }
         };
     }, []);
     style.position = 'relative';
-    var sized = React.cloneElement.apply(React, __spreadArrays([element, { style: style }], __spreadArrays([
+    var sized = React.cloneElement.apply(React, tslib_1.__spreadArrays([element, { style: style }], tslib_1.__spreadArrays([
         React.createElement('iframe', {
             ref: ref,
             style: {
@@ -77,4 +79,4 @@ var useSize = function (element, _a) {
     ], React.Children.toArray(element.props.children))));
     return [sized, state];
 };
-export default useSize;
+exports.default = useSize;

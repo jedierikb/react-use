@@ -1,11 +1,13 @@
-import { useEffect } from 'react';
-import { isNavigator, noop } from './misc/util';
-var isVibrationApiSupported = isNavigator && 'vibrate' in navigator;
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var react_1 = require("react");
+var util_1 = require("./misc/util");
+var isVibrationApiSupported = util_1.isNavigator && 'vibrate' in navigator;
 function useVibrate(enabled, pattern, loop) {
     if (enabled === void 0) { enabled = true; }
     if (pattern === void 0) { pattern = [1000, 1000]; }
     if (loop === void 0) { loop = true; }
-    useEffect(function () {
+    react_1.useEffect(function () {
         var interval;
         if (enabled) {
             navigator.vibrate(pattern);
@@ -26,4 +28,4 @@ function useVibrate(enabled, pattern, loop) {
         };
     }, [enabled]);
 }
-export default isVibrationApiSupported ? useVibrate : noop;
+exports.default = isVibrationApiSupported ? useVibrate : util_1.noop;

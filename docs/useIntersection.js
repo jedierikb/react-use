@@ -1,7 +1,9 @@
-import { useEffect, useState } from 'react';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var react_1 = require("react");
 var useIntersection = function (ref, options) {
-    var _a = useState(null), intersectionObserverEntry = _a[0], setIntersectionObserverEntry = _a[1];
-    useEffect(function () {
+    var _a = react_1.useState(null), intersectionObserverEntry = _a[0], setIntersectionObserverEntry = _a[1];
+    react_1.useEffect(function () {
         if (ref.current && typeof IntersectionObserver === 'function') {
             var handler = function (entries) {
                 setIntersectionObserverEntry(entries[0]);
@@ -17,4 +19,4 @@ var useIntersection = function (ref, options) {
     }, [ref.current, options.threshold, options.root, options.rootMargin]);
     return intersectionObserverEntry;
 };
-export default useIntersection;
+exports.default = useIntersection;

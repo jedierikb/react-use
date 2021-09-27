@@ -1,5 +1,7 @@
-import { useEffect, useState } from 'react';
-import { off, on } from './misc/util';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var react_1 = require("react");
+var util_1 = require("./misc/util");
 var defaultState = {
     acceleration: {
         x: null,
@@ -20,8 +22,8 @@ var defaultState = {
 };
 var useMotion = function (initialState) {
     if (initialState === void 0) { initialState = defaultState; }
-    var _a = useState(initialState), state = _a[0], setState = _a[1];
-    useEffect(function () {
+    var _a = react_1.useState(initialState), state = _a[0], setState = _a[1];
+    react_1.useEffect(function () {
         var handler = function (event) {
             var acceleration = event.acceleration, accelerationIncludingGravity = event.accelerationIncludingGravity, rotationRate = event.rotationRate, interval = event.interval;
             setState({
@@ -43,11 +45,11 @@ var useMotion = function (initialState) {
                 interval: interval,
             });
         };
-        on(window, 'devicemotion', handler);
+        util_1.on(window, 'devicemotion', handler);
         return function () {
-            off(window, 'devicemotion', handler);
+            util_1.off(window, 'devicemotion', handler);
         };
     }, []);
     return state;
 };
-export default useMotion;
+exports.default = useMotion;

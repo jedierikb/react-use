@@ -1,15 +1,18 @@
-import { __assign } from "tslib";
-import useList from './useList';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = require("tslib");
+var useList_1 = tslib_1.__importDefault(require("./useList"));
 /**
  * @deprecated Use `useList` hook's upsert action instead
  */
-export default function useUpsert(predicate, initialList) {
+function useUpsert(predicate, initialList) {
     if (initialList === void 0) { initialList = []; }
-    var _a = useList(initialList), list = _a[0], listActions = _a[1];
+    var _a = useList_1.default(initialList), list = _a[0], listActions = _a[1];
     return [
         list,
-        __assign(__assign({}, listActions), { upsert: function (newItem) {
+        tslib_1.__assign(tslib_1.__assign({}, listActions), { upsert: function (newItem) {
                 listActions.upsert(predicate, newItem);
             } }),
     ];
 }
+exports.default = useUpsert;

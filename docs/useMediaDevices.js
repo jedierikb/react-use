@@ -1,8 +1,10 @@
-import { useEffect, useState } from 'react';
-import { isNavigator, noop, off, on } from './misc/util';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var react_1 = require("react");
+var util_1 = require("./misc/util");
 var useMediaDevices = function () {
-    var _a = useState({}), state = _a[0], setState = _a[1];
-    useEffect(function () {
+    var _a = react_1.useState({}), state = _a[0], setState = _a[1];
+    react_1.useEffect(function () {
         var mounted = true;
         var onChange = function () {
             navigator.mediaDevices
@@ -22,16 +24,16 @@ var useMediaDevices = function () {
                     });
                 }
             })
-                .catch(noop);
+                .catch(util_1.noop);
         };
-        on(navigator.mediaDevices, 'devicechange', onChange);
+        util_1.on(navigator.mediaDevices, 'devicechange', onChange);
         onChange();
         return function () {
             mounted = false;
-            off(navigator.mediaDevices, 'devicechange', onChange);
+            util_1.off(navigator.mediaDevices, 'devicechange', onChange);
         };
     }, []);
     return state;
 };
 var useMediaDevicesMock = function () { return ({}); };
-export default isNavigator && !!navigator.mediaDevices ? useMediaDevices : useMediaDevicesMock;
+exports.default = util_1.isNavigator && !!navigator.mediaDevices ? useMediaDevices : useMediaDevicesMock;

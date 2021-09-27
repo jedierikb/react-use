@@ -1,9 +1,11 @@
-import { useEffect, useState } from 'react';
-import { isBrowser } from './misc/util';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var react_1 = require("react");
+var util_1 = require("./misc/util");
 var useMedia = function (query, defaultState) {
     if (defaultState === void 0) { defaultState = false; }
-    var _a = useState(isBrowser ? function () { return window.matchMedia(query).matches; } : defaultState), state = _a[0], setState = _a[1];
-    useEffect(function () {
+    var _a = react_1.useState(util_1.isBrowser ? function () { return window.matchMedia(query).matches; } : defaultState), state = _a[0], setState = _a[1];
+    react_1.useEffect(function () {
         var mounted = true;
         var mql = window.matchMedia(query);
         var onChange = function () {
@@ -21,4 +23,4 @@ var useMedia = function (query, defaultState) {
     }, [query]);
     return state;
 };
-export default useMedia;
+exports.default = useMedia;

@@ -1,8 +1,10 @@
-import { useEffect } from 'react';
-import { off, on } from './misc/util';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var react_1 = require("react");
+var util_1 = require("./misc/util");
 var usePageLeave = function (onPageLeave, args) {
     if (args === void 0) { args = []; }
-    useEffect(function () {
+    react_1.useEffect(function () {
         if (!onPageLeave) {
             return;
         }
@@ -13,10 +15,10 @@ var usePageLeave = function (onPageLeave, args) {
                 onPageLeave();
             }
         };
-        on(document, 'mouseout', handler);
+        util_1.on(document, 'mouseout', handler);
         return function () {
-            off(document, 'mouseout', handler);
+            util_1.off(document, 'mouseout', handler);
         };
     }, args);
 };
-export default usePageLeave;
+exports.default = usePageLeave;

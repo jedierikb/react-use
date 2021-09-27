@@ -1,6 +1,8 @@
-import { useEffect } from 'react';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var react_1 = require("react");
 var useLifecycles = function (mount, unmount) {
-    useEffect(function () {
+    react_1.useEffect(function () {
         if (mount) {
             mount();
         }
@@ -11,4 +13,4 @@ var useLifecycles = function (mount, unmount) {
         };
     }, []);
 };
-export default useLifecycles;
+exports.default = useLifecycles;

@@ -1,5 +1,7 @@
-import { __assign } from "tslib";
-import { useCallback, useEffect, useRef, useState } from 'react';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = require("tslib");
+var react_1 = require("react");
 var Status;
 (function (Status) {
     Status[Status["init"] = 0] = "init";
@@ -8,8 +10,8 @@ var Status;
     Status[Status["end"] = 3] = "end";
 })(Status || (Status = {}));
 var useSpeech = function (text, options) {
-    var mounted = useRef(false);
-    var _a = useState(function () {
+    var mounted = react_1.useRef(false);
+    var _a = react_1.useState(function () {
         var _a = options.voice || {}, _b = _a.lang, lang = _b === void 0 ? 'default' : _b, _c = _a.name, name = _c === void 0 ? '' : _c;
         return {
             isPlaying: false,
@@ -21,31 +23,31 @@ var useSpeech = function (text, options) {
             volume: options.volume || 1,
         };
     }), state = _a[0], setState = _a[1];
-    var handlePlay = useCallback(function () {
+    var handlePlay = react_1.useCallback(function () {
         if (!mounted.current) {
             return;
         }
         setState(function (preState) {
-            return __assign(__assign({}, preState), { isPlaying: true, status: Status[Status.play] });
+            return tslib_1.__assign(tslib_1.__assign({}, preState), { isPlaying: true, status: Status[Status.play] });
         });
     }, []);
-    var handlePause = useCallback(function () {
+    var handlePause = react_1.useCallback(function () {
         if (!mounted.current) {
             return;
         }
         setState(function (preState) {
-            return __assign(__assign({}, preState), { isPlaying: false, status: Status[Status.pause] });
+            return tslib_1.__assign(tslib_1.__assign({}, preState), { isPlaying: false, status: Status[Status.pause] });
         });
     }, []);
-    var handleEnd = useCallback(function () {
+    var handleEnd = react_1.useCallback(function () {
         if (!mounted.current) {
             return;
         }
         setState(function (preState) {
-            return __assign(__assign({}, preState), { isPlaying: false, status: Status[Status.end] });
+            return tslib_1.__assign(tslib_1.__assign({}, preState), { isPlaying: false, status: Status[Status.end] });
         });
     }, []);
-    useEffect(function () {
+    react_1.useEffect(function () {
         mounted.current = true;
         var utterance = new SpeechSynthesisUtterance(text);
         options.lang && (utterance.lang = options.lang);
@@ -64,4 +66,4 @@ var useSpeech = function (text, options) {
     }, []);
     return state;
 };
-export default useSpeech;
+exports.default = useSpeech;

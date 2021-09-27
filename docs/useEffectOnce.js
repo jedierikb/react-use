@@ -1,5 +1,7 @@
-import { useEffect } from 'react';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var react_1 = require("react");
 var useEffectOnce = function (effect) {
-    useEffect(effect, []);
+    react_1.useEffect(effect, []);
 };
-export default useEffectOnce;
+exports.default = useEffectOnce;

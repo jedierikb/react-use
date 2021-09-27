@@ -1,8 +1,10 @@
-import { useEffect, useState } from 'react';
-import { off, on } from './misc/util';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var react_1 = require("react");
+var util_1 = require("./misc/util");
 var useScrolling = function (ref) {
-    var _a = useState(false), scrolling = _a[0], setScrolling = _a[1];
-    useEffect(function () {
+    var _a = react_1.useState(false), scrolling = _a[0], setScrolling = _a[1];
+    react_1.useEffect(function () {
         if (ref.current) {
             var scrollingTimeout_1;
             var handleScrollEnd_1 = function () {
@@ -13,10 +15,10 @@ var useScrolling = function (ref) {
                 clearTimeout(scrollingTimeout_1);
                 scrollingTimeout_1 = setTimeout(function () { return handleScrollEnd_1(); }, 150);
             };
-            on(ref.current, 'scroll', handleScroll_1, false);
+            util_1.on(ref.current, 'scroll', handleScroll_1, false);
             return function () {
                 if (ref.current) {
-                    off(ref.current, 'scroll', handleScroll_1, false);
+                    util_1.off(ref.current, 'scroll', handleScroll_1, false);
                 }
             };
         }
@@ -24,4 +26,4 @@ var useScrolling = function (ref) {
     }, [ref]);
     return scrolling;
 };
-export default useScrolling;
+exports.default = useScrolling;

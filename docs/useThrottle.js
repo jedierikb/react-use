@@ -1,12 +1,15 @@
-import { useEffect, useRef, useState } from 'react';
-import useUnmount from './useUnmount';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = require("tslib");
+var react_1 = require("react");
+var useUnmount_1 = tslib_1.__importDefault(require("./useUnmount"));
 var useThrottle = function (value, ms) {
     if (ms === void 0) { ms = 200; }
-    var _a = useState(value), state = _a[0], setState = _a[1];
-    var timeout = useRef();
-    var nextValue = useRef(null);
-    var hasNextValue = useRef(0);
-    useEffect(function () {
+    var _a = react_1.useState(value), state = _a[0], setState = _a[1];
+    var timeout = react_1.useRef();
+    var nextValue = react_1.useRef(null);
+    var hasNextValue = react_1.useRef(0);
+    react_1.useEffect(function () {
         if (!timeout.current) {
             setState(value);
             var timeoutCallback_1 = function () {
@@ -26,9 +29,9 @@ var useThrottle = function (value, ms) {
             hasNextValue.current = true;
         }
     }, [value]);
-    useUnmount(function () {
+    useUnmount_1.default(function () {
         timeout.current && clearTimeout(timeout.current);
     });
     return state;
 };
-export default useThrottle;
+exports.default = useThrottle;

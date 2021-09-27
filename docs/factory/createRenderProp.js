@@ -1,5 +1,7 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var defaultMapPropsToArgs = function (props) { return [props]; };
-export default function createRenderProp(hook, mapPropsToArgs) {
+function createRenderProp(hook, mapPropsToArgs) {
     if (mapPropsToArgs === void 0) { mapPropsToArgs = defaultMapPropsToArgs; }
     return function RenderProp(props) {
         var state = hook.apply(void 0, mapPropsToArgs(props));
@@ -7,3 +9,4 @@ export default function createRenderProp(hook, mapPropsToArgs) {
         return render ? render(state) || null : null;
     };
 }
+exports.default = createRenderProp;

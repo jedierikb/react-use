@@ -1,6 +1,8 @@
-import { useEffect } from 'react';
-import { isBrowser, off, on } from './misc/util';
-var defaultTarget = isBrowser ? window : null;
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var react_1 = require("react");
+var util_1 = require("./misc/util");
+var defaultTarget = util_1.isBrowser ? window : null;
 var isListenerType1 = function (target) {
     return !!target.addEventListener;
 };
@@ -9,7 +11,7 @@ var isListenerType2 = function (target) {
 };
 var useEvent = function (name, handler, target, options) {
     if (target === void 0) { target = defaultTarget; }
-    useEffect(function () {
+    react_1.useEffect(function () {
         if (!handler) {
             return;
         }
@@ -17,14 +19,14 @@ var useEvent = function (name, handler, target, options) {
             return;
         }
         if (isListenerType1(target)) {
-            on(target, name, handler, options);
+            util_1.on(target, name, handler, options);
         }
         else if (isListenerType2(target)) {
             target.on(name, handler, options);
         }
         return function () {
             if (isListenerType1(target)) {
-                off(target, name, handler, options);
+                util_1.off(target, name, handler, options);
             }
             else if (isListenerType2(target)) {
                 target.off(name, handler, options);
@@ -32,4 +34,4 @@ var useEvent = function (name, handler, target, options) {
         };
     }, [name, handler, target, JSON.stringify(options)]);
 };
-export default useEvent;
+exports.default = useEvent;
