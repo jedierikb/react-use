@@ -8,7 +8,7 @@ export default [
   {
     input: pkg.module,
     output: {
-      file: 'doc/react-use.js',
+      file: 'docs/react-use.js',
       format: 'esm'
     },
     plugins: [
