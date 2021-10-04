@@ -3,15 +3,18 @@ import {
   terser
 } from 'rollup-plugin-terser';
 import pkg from './package.json';
+import resolve from '@rollup/plugin-node-resolve';
+import replace from '@rollup/plugin-replace';
 
 export default [
   {
-    input: pkg.module,
+    input: 'esm/exports',
     output: {
       file: 'docs/react-use.js',
       format: 'esm'
     },
     plugins: [
+      resolve(),
       babel({
         "exclude": 'node_modules/**',
         "babelHelpers": "bundled",
@@ -22,8 +25,7 @@ export default [
       terser()
     ],
     external: [
-      'react',
-      'react-dom'
+      'react'
     ]
   },
 ];
